@@ -14,7 +14,7 @@ require(data.table)
 
 tmp.data <- read.csv("Data/Base_Files/NECAP2012-13_Final.csv")
 load("Data/Maine_SGP.Rdata")
-load("Data/Base_Files/Maine_District_and_School_Names.Rdata")
+load("Data/Base_Files/School_District_Number_Table_2012_2013.Rdata")
 
 
 ##########################################################
@@ -149,17 +149,12 @@ Maine_Data_LONG_2012_2013$VALID_CASE[Maine_Data_LONG_2012_2013$TEST_STATUS!="A"]
 ### Fix up Maine District and School Names for 2012_2013
 
 Maine_Data_LONG_2012_2013 <- as.data.table(Maine_Data_LONG_2012_2013)
-Maine_District_and_School_Names <- as.data.table(Maine_District_and_School_Names)
-Maine_District_and_School_Names$DISTRICT_NAME <- factor(Maine_District_and_School_Names$DISTRICT_NAME)
-Maine_District_and_School_Names$SCHOOL_NAME <- factor(Maine_District_and_School_Names$SCHOOL_NAME)
-setkeyv(Maine_District_and_School_Names, c("DISTRICT_NUMBER", "SCHOOL_NUMBER"))
+setkeyv(School_District_Number_Table_2012_2013, c("DISTRICT_NUMBER", "SCHOOL_NUMBER"))
 setkeyv(Maine_Data_LONG_2012_2013, c("DISTRICT_NUMBER", "SCHOOL_NUMBER"))
-Maine_Data_LONG_2012_2013 <- Maine_District_and_School_Names[Maine_Data_LONG_2012_2013, mult="all"]
+Maine_Data_LONG_2012_2013 <- School_District_Number_Table_2012_2013[Maine_Data_LONG_2012_2013, mult="all"]
 
 ## Identify duplicates
 
-#setkey(Maine_Data_LONG_2012_2013, VALID_CASE, CONTENT_AREA, YEAR, ID)
-#dups <- Maine_Data_LONG_2012_2013[Maine_Data_LONG_2012_2013[J("VALID_CASE")][duplicated(Maine_Data_LONG_2012_2013[J("VALID_CASE")])][,list(VALID_CASE, YEAR, CONTENT_AREA, ID)]]
 setkey(Maine_Data_LONG_2012_2013, VALID_CASE, CONTENT_AREA, YEAR, ID, GRADE, SCALE_SCORE)
 setkey(Maine_Data_LONG_2012_2013, VALID_CASE, CONTENT_AREA, YEAR, ID)
 Maine_Data_LONG_2012_2013[which(duplicated(Maine_Data_LONG_2012_2013))-1, VALID_CASE := "INVALID_CASE"]

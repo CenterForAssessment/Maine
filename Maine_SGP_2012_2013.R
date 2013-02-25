@@ -28,3 +28,8 @@ Maine_SGP <- updateSGP(
 ### Save results
 
 save(Maine_SGP, file="Data/Maine_SGP.Rdata")
+
+
+### Create individual student reports for entire state
+
+visualizeSGP(Maine_SGP, plot.types="studentGrowthPlot", parallel.config=list(BACKEND="PARALLEL", WORKERS=list(SG_PLOTS=30)))
