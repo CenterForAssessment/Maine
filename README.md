@@ -1,4 +1,4 @@
 Maine
-=====
+========
 
-SGP documentation and code for Maine SGP analyses
+SGP source code and documentation associated with Maine SGP analyses
