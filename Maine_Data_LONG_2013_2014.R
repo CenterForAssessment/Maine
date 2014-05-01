@@ -91,6 +91,10 @@ Maine_Data_LONG_2013_2014$CONTENT_AREA <- as.character(Maine_Data_LONG_2013_2014
 
 Maine_Data_LONG_2013_2014$GRADE <- as.character(as.numeric(as.character(Maine_Data_LONG_2013_2014$GRADE)))
 
+# SCALE_SCORE
+
+Maine_Data_LONG_2013_2014$SCALE_SCORE <- as.numeric(Maine_Data_LONG_2013_2014$SCALE_SCORE)
+
 # GENDER
 
 levels(Maine_Data_LONG_2013_2014$GENDER) <- c("Female", "Male")
